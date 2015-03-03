@@ -18,9 +18,31 @@
 
 namespace Rhubarb\Scaffolds\ApplicationSettings\Settings;
 
+require_once __DIR__ . '/../Models/ApplicationSetting.php';
+require_once __DIR__ . '/../../../rhubarb/src/Settings.php';
+
 use Rhubarb\Crown\Settings;
+use Rhubarb\Scaffolds\ApplicationSettings\Models\ApplicationSetting;
+use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 
 class ApplicationSettings extends Settings
 {
+    public function __set($propertyName, $value)
+    {
+        parent::__set($propertyName, $value);
 
+        $setting = ApplicationSetting::FindOrCreateBySettingName($propertyName);
+        $setting->SettingValue = $value;
+        $setting->save();
+    }
+
+    public function __get($propertyName)
+    {
+        try {
+            $setting = ApplicationSetting::FindBySettingName($propertyName);
+            return $setting->SettingValue;
+        } catch( RecordNotFoundException $er){
+            return null;
+        }
+    }
 }

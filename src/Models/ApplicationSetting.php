@@ -18,6 +18,8 @@
 
 namespace Rhubarb\Scaffolds\ApplicationSettings\Models;
 
+use Rhubarb\Stem\Exceptions\RecordNotFoundException;
+use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Repositories\MySql\Schema\Columns\AutoIncrement;
 use Rhubarb\Stem\Repositories\MySql\Schema\Columns\MediumText;
@@ -34,17 +36,46 @@ class ApplicationSetting extends Model
      */
     protected function createSchema()
     {
-        $schema = new MySqlSchema( "tblApplicationSetting" );
+        $schema = new MySqlSchema("tblApplicationSetting");
         $schema->addColumn(
-            new AutoIncrement( "ApplicationSettingID" ),
-            new Varchar( "SettingName", 30 ),
-            new MediumText( "SettingValue" )
+            new AutoIncrement("ApplicationSettingID"),
+            new Varchar("SettingName", 30),
+            new MediumText("SettingValue")
         );
 
-        $schema->addIndex( new Index( "SettingName", Index::UNIQUE, [ "SettingName" ] ) );
+        $schema->addIndex(new Index("SettingName", Index::UNIQUE, ["SettingName"]));
 
         return $schema;
     }
 
+    /**
+     * Finds a setting entry by it's setting name.
+     *
+     * @param $settingName string The name of the setting the fetch.
+     * @return Model
+     * @throws RecordNotFoundException
+     */
+    public static function findBySettingName($settingName)
+    {
+        return self::findLast(new Equals("SettingName", $settingName));
+    }
 
+    /**
+     * Returns the existing entry for a given setting name or creates a new (but unsaved) model if
+     * one could not be found.
+     *
+     * @param string $settingName The name of the setting to find
+     * @return ApplicationSetting|Model
+     */
+    public static function findOrCreateBySettingName($settingName)
+    {
+        try {
+            return self::findBySettingName($settingName);
+        } catch (RecordNotFoundException $er) {
+            $setting = new self();
+            $setting->SettingName = $settingName;
+
+            return $setting;
+        }
+    }
 }
