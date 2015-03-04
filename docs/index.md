@@ -7,7 +7,7 @@ own @property definitions on the doc comment to give your IDE some idea of what 
 support.
 
 The key difference with this settings object is that settings are persisted in a repository through the
-`ApplicationSetting` model (not singular not plural).
+`ApplicationSetting` model (note singular not plural).
 
 You should not use the `ApplicationSetting` model directly; always use the `ApplicationSettings` class.
 
