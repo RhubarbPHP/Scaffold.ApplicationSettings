@@ -32,13 +32,14 @@ class ApplicationSettingsTest extends RhubarbTestCase
 
         $applicationSetting = ApplicationSetting::findLast();
 
-        $this->assertEquals( 4, $applicationSetting->SettingValue );
-        $this->assertCount( 1, ApplicationSetting::find(), "The setting was not persisted in the repository" );
+        $this->assertEquals(4, $applicationSetting->SettingValue);
+        $this->assertCount(1, ApplicationSetting::find(), "The setting was not persisted in the repository");
 
         $settings = new ApplicationSettings();
         $settings->HappyCustomers = 5;
 
-        $this->assertCount( 1, ApplicationSetting::find(), "Changing a setting should not result in an additional setting in the table." );
+        $this->assertCount(1, ApplicationSetting::find(),
+            "Changing a setting should not result in an additional setting in the table.");
     }
 
     public function testSettingsRetrieve()
@@ -48,10 +49,10 @@ class ApplicationSettingsTest extends RhubarbTestCase
         $settings = new ApplicationSettings();
         $settings->HappyCustomers = 4;
 
-        Settings::deleteSettingNamespace( "Application" );
+        Settings::deleteSettingNamespace("Application");
 
         $settings = new ApplicationSettings();
 
-        $this->assertEquals( 4, $settings->HappyCustomers );
+        $this->assertEquals(4, $settings->HappyCustomers);
     }
 }
