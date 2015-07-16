@@ -10,12 +10,6 @@
       "Rhubarb\\Scaffolds\\ApplicationSettings\\Tests\\": "tests/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/acuthbert/rhubarb"
-    }
-  ],
   "require": {
     "rhubarbphp/rhubarb": "dev-crown",
     "rhubarbphp/module-stem": "dev-migration"
