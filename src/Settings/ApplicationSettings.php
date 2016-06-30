@@ -31,7 +31,7 @@ class ApplicationSettings extends Settings
     {
         parent::__set($propertyName, $value);
 
-        $setting = ApplicationSetting::FindOrCreateBySettingName($propertyName);
+        $setting = ApplicationSetting::findOrCreateBySettingName($propertyName);
         $setting->SettingValue = $value;
         $setting->save();
     }
@@ -39,7 +39,7 @@ class ApplicationSettings extends Settings
     public function __get($propertyName)
     {
         try {
-            $setting = ApplicationSetting::FindBySettingName($propertyName);
+            $setting = ApplicationSetting::findBySettingName($propertyName);
             return $setting->SettingValue;
         } catch( RecordNotFoundException $er){
             return null;
