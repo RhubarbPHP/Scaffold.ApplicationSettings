@@ -21,11 +21,12 @@ namespace Rhubarb\Scaffolds\ApplicationSettings\Models;
 use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Models\Model;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\AutoIncrement;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\MediumText;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\Varchar;
-use Rhubarb\Stem\Repositories\MySql\Schema\Index;
-use Rhubarb\Stem\Repositories\MySql\Schema\MySqlSchema;
+use Rhubarb\Stem\Repositories\MySql\Schema\MySqlIndex;
+use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
+use Rhubarb\Stem\Schema\Columns\LongStringColumn;
+use Rhubarb\Stem\Schema\Columns\StringColumn;
+use Rhubarb\Stem\Schema\Index;
+use Rhubarb\Stem\Schema\ModelSchema;
 
 class ApplicationSetting extends Model
 {
@@ -36,14 +37,14 @@ class ApplicationSetting extends Model
      */
     protected function createSchema()
     {
-        $schema = new MySqlSchema("tblApplicationSetting");
+        $schema = new ModelSchema("tblApplicationSetting");
         $schema->addColumn(
-            new AutoIncrement("ApplicationSettingID"),
-            new Varchar("SettingName", 30),
-            new MediumText("SettingValue")
+            new AutoIncrementColumn("ApplicationSettingID"),
+            new StringColumn("SettingName", 30),
+            new LongStringColumn("SettingValue")
         );
 
-        $schema->addIndex(new Index("SettingName", Index::UNIQUE, ["SettingName"]));
+        $schema->addIndex(new Index("SettingName", MySqlIndex::UNIQUE, ["SettingName"]));
 
         return $schema;
     }
