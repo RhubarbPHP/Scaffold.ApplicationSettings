@@ -28,6 +28,13 @@ use Rhubarb\Stem\Schema\Columns\StringColumn;
 use Rhubarb\Stem\Schema\Index;
 use Rhubarb\Stem\Schema\ModelSchema;
 
+/**
+ * A model which holds a key-value pair
+ *
+ * @property int $ApplicationSettingID Unique identifier
+ * @property string $SettingName The key of the setting
+ * @property string $SettingValue The setting value
+ */
 class ApplicationSetting extends Model
 {
     /**
