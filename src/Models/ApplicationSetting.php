@@ -18,6 +18,7 @@
 
 namespace Rhubarb\Scaffolds\ApplicationSettings\Models;
 
+use Exception;
 use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Models\Model;

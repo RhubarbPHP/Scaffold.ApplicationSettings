@@ -18,8 +18,8 @@
 
 namespace Rhubarb\Scaffolds\ApplicationSettings\Tests\Settings;
 
-use Rhubarb\Crown\Settings;
-use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Crown\Application;
+use Rhubarb\Crown\Tests\Fixtures\TestCases\RhubarbTestCase;
 use Rhubarb\Scaffolds\ApplicationSettings\Models\ApplicationSetting;
 use Rhubarb\Scaffolds\ApplicationSettings\Settings\ApplicationSettings;
 
@@ -27,7 +27,7 @@ class ApplicationSettingsTest extends RhubarbTestCase
 {
     public function testSettingsStore()
     {
-        $settings = new ApplicationSettings();
+        $settings = ApplicationSettings::singleton();
         $settings->HappyCustomers = 4;
 
         $applicationSetting = ApplicationSetting::findLast();
@@ -35,7 +35,7 @@ class ApplicationSettingsTest extends RhubarbTestCase
         $this->assertEquals(4, $applicationSetting->SettingValue);
         $this->assertCount(1, ApplicationSetting::find(), "The setting was not persisted in the repository");
 
-        $settings = new ApplicationSettings();
+        $settings = ApplicationSettings::singleton();
         $settings->HappyCustomers = 5;
 
         $this->assertCount(1, ApplicationSetting::find(),
@@ -46,12 +46,12 @@ class ApplicationSettingsTest extends RhubarbTestCase
     {
         ApplicationSetting::clearObjectCache();
 
-        $settings = new ApplicationSettings();
+        $settings = ApplicationSettings::singleton();
         $settings->HappyCustomers = 4;
 
-        Settings::deleteSettingNamespace("Application");
+        Application::current()->container()->clearSingleton(ApplicationSettings::class);
 
-        $settings = new ApplicationSettings();
+        $settings = ApplicationSettings::singleton();
 
         $this->assertEquals(4, $settings->HappyCustomers);
     }

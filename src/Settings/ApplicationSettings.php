@@ -29,8 +29,6 @@ class ApplicationSettings extends Settings
 {
     public function __set($propertyName, $value)
     {
-        parent::__set($propertyName, $value);
-
         $setting = ApplicationSetting::findOrCreateBySettingName($propertyName);
         $setting->SettingValue = $value;
         $setting->save();
