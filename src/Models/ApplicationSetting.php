@@ -24,6 +24,7 @@ use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Repositories\MySql\Schema\MySqlIndex;
 use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
+use Rhubarb\Stem\Schema\Columns\BinaryDataColumn;
 use Rhubarb\Stem\Schema\Columns\LongStringColumn;
 use Rhubarb\Stem\Schema\Columns\StringColumn;
 use Rhubarb\Stem\Schema\Index;
@@ -49,7 +50,7 @@ class ApplicationSetting extends Model
         $schema->addColumn(
             new AutoIncrementColumn("ApplicationSettingID"),
             new StringColumn("SettingName", 30),
-            new LongStringColumn("SettingValue")
+            new BinaryDataColumn("SettingValue")
         );
 
         $schema->addIndex(new Index("SettingName", MySqlIndex::UNIQUE, ["SettingName"]));
