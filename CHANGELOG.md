@@ -1,5 +1,7 @@
 # Changelog
 
+### 1.0.x
+
 ### 1.0.3
 
 Change:	    Increased length of SettingName
