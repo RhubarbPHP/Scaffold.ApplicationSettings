@@ -49,7 +49,7 @@ class ApplicationSetting extends Model
         $schema = new ModelSchema("tblApplicationSetting");
         $schema->addColumn(
             new AutoIncrementColumn("ApplicationSettingID"),
-            new StringColumn("SettingName", 30),
+            new StringColumn("SettingName", 60),
             new BinaryDataColumn("SettingValue")
         );
 
