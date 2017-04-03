@@ -22,6 +22,7 @@ use Exception;
 use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Models\Model;
+use Rhubarb\Stem\Repositories\MySql\Schema\Columns\MySqlMediumTextColumn;
 use Rhubarb\Stem\Repositories\MySql\Schema\MySqlIndex;
 use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
 use Rhubarb\Stem\Schema\Columns\BinaryDataColumn;
@@ -50,7 +51,7 @@ class ApplicationSetting extends Model
         $schema->addColumn(
             new AutoIncrementColumn("ApplicationSettingID"),
             new StringColumn("SettingName", 60),
-            new BinaryDataColumn("SettingValue")
+            new MySqlMediumTextColumn("SettingValue")
         );
 
         $schema->addIndex(new Index("SettingName", MySqlIndex::UNIQUE, ["SettingName"]));
